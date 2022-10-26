@@ -1,6 +1,5 @@
 trigger:
-- master
-- none
+- main
 name: Deploy Az Policy Bicep
 variables:
   vmImageName: 'ubuntu-latest'
