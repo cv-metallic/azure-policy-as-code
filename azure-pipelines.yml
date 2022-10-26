@@ -1,19 +1,22 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
-
+- master
+- none
+name: Deploy Az Policy Bicep
+variables:
+  vmImageName: 'ubuntu-latest'
+  azureServiceConnection: 'MetallicSecurityAzPolicy'
+  ManagementGroupID: 'b02efbdc-6758-4c84-90b4-3fd8851c06f4'
+  location: 'eastus'
+  DeploymentName: 'AzPolicyBicep'
+  templateFile: './Bicep/learn/Level1/main.bicep'
 pool:
-  vmImage: ubuntu-latest
-
+  vmImage: $(vmImageName)
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az --version
+      az deployment mg create --management-group-id $(ManagementGroupID) --name $(DeploymentName) --location $(location) --template-file $(templateFile)
