@@ -9,6 +9,7 @@ param listOfAllowedLocations array = [
   'eastus2'
   'westus'
   'westus2'
+  'centralus'
 ]
 param listOfAllowedSKUs array = [
   'Standard_B1ls'
