@@ -1,4 +1,4 @@
-targetScope = 'subscription'
+targetScope = 'managementGroup'
 
 // PARAMETERS
 param policySource string = 'globalbao/azure-policy-as-code'
